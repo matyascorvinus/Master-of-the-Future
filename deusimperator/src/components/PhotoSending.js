@@ -16,10 +16,7 @@ window.Blob = Blob
 const sessionID = new Date().getTime()
 var ImagePicker = require('react-native-image-picker');
 var options = {
-    title: 'Select Avatar',
-    customButtons: [
-        { name: 'fb', title: 'Choose Photo from Facebook' },
-    ],
+    title: 'Upload Photo',
     storageOptions: {
         skipBackup: true,
         path: 'images'
@@ -54,37 +51,37 @@ class PhotoSending extends Component {
                 });
                 imageRef.put(response.uri, { contentType: 'image/jpg' })
                 var firebaseUrl = "https://firebasestorage.googleapis.com/v0/b/deusimperator-e9d95.appspot.com/o/"
-                var finalUrl= firebaseUrl + 'Pictures%2FDestiny%2F' +`${currentUser}%2F`+`Picture%2B${sessionID}`+"?alt=media";
+                var finalUrl = firebaseUrl + 'Pictures%2FDestiny%2F' + `${currentUser}%2F` + `Picture%2B${sessionID}` + "?alt=media";
                 console.log(finalUrl)
-                this.setState({downURL:finalUrl})
+                this.setState({ downURL: finalUrl })
                 // firebase.auth().currentUser.getIdToken().then((token) => {
                 //     fetch(finalUrl, {headers: {'Authorization' : 'Firebase ' + token}})
                 //     .then((response) => response.json())
                 //     .then((responseJson) => {
                 //       var downloadURL = finalUrl + "?alt=media&token=" + responseJson.downloadTokens
-                      
+
                 //     })
-                      
+
                 //     })
-                    //console.log("Photo: ")   
+                //console.log("Photo: ")   
                 //imageRef.getDownloadURL()
 
                 //https://firebasestorage.googleapis.com/v0/b/deusimperator-e9d95.appspot.com/o/Pictures%2FDestiny%2FFqzG2xpxQSVwaZjVmtmtaUHmhzh2%2FPicture%2B1536856768706?alt=media&token=d62a5aef-d592-4ca6-bff1-d32c40c1154b
-                
+
             }
         });
     }
-   
-    
-    
+
+
+
 
 
 
     onSending = () => {
-        var joined = this.state.histories.concat({key:firebase.auth().currentUser.uid, time: currentTime, url:this.state.downURL, messageLine: this.state.content,email:firebase.auth().currentUser.email });
+        var joined = this.state.histories.concat({ key: firebase.auth().currentUser.uid, time: currentTime, url: this.state.downURL, messageLine: this.state.content, email: firebase.auth().currentUser.email });
         this.setState({ haveImage: false, histories: joined })
 
-        console.log("Object PPP"+joined)
+        console.log("Object PPP" + joined)
         //this.props.addHistory(joined)
         firebase.database().ref('/users').child('/history').set(joined)
 
@@ -112,9 +109,17 @@ class PhotoSending extends Component {
                         onChangeText={(content) => this.setState({ content })}
 
                     />
-                    <TouchableOpacity style={[styles.buttonMaster, { backgroundColor: 'orange', marginTop: 60, marginBottom: 70 }]} onPress={this.onSending}>
-                        <Text style={{ color: 'white', fontSize: 32, fontWeight: 'bold' }}>Thỉnh thầy</Text>
-                    </TouchableOpacity>
+                    <View style={{ flexDirection: 'row' }}>
+                        <TouchableOpacity style={[styles.buttonMaster, { backgroundColor: 'orange', marginBottom: 70 }]} onPress={this.onSending}>
+                            <Text style={{ color: 'white', fontSize: 32, fontWeight: 'bold' }}>Thỉnh thầy</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{ justifyContent: 'center', alignContent: 'center', flex: 1, height: 50, backgroundColor: 'orange', borderRadius: 10 }}
+                            onPress={() => {
+                                firebase.auth().signOut().then(() => this.props.navigation.navigate('LoginScreen'))
+                            }}>
+                            <Text style={{ fontSize: 15, color: 'white', marginLeft: 10 }}>Đăng xuất</Text>
+                        </TouchableOpacity>
+                    </View>
                 </ImageBackground>
             </KeyboardAvoidingView>
 

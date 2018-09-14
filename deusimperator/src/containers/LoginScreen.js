@@ -2,46 +2,49 @@ import React, { Component } from 'react';
 import {
   Text, TouchableOpacity,
   View, StyleSheet, Image, Dimensions, TextInput, Platform,
-  KeyboardAvoidingView,ActivityIndicator,
+  KeyboardAvoidingView, ActivityIndicator,
 } from 'react-native';
 import firebase from 'react-native-firebase';
 import { backgroundColor, primaryColorBrown, primaryColorRed, primaryColorGreen } from '../styles';
 
 class LoginScreen extends Component {
   state = {
-    isSigningIn:false,
-    isSigningUp:false,
+    isSigningIn: false,
+    isSigningUp: false,
+    email: "",
+    password: ""
   }
 
-  onPushDatatoFirebase =(user)=>{firebase.database().ref('/users').child(user.uid).set({
-    displayName:'',
-    phoneNumber:'',
-    address:''
-  })}
-onSignIn=()=>{
-  this.setState({isSigningIn:true})
-  const email =this.state.email;
-  const password = this.state.password;
-  firebase.auth().signInAndRetrieveDataWithEmailAndPassword(email,password)
-  .then(res =>{
-    this.setState({isSigningIn:false})
-    this.props.navigation.navigate('Photo')
-  })
-  .catch(err=>this.setState({error:err.toString(),password:'',isSigningIn:false}))
-}
-
-  onSignUp=()=>
-  {
-    this.setState({isSigningUp:true})
-    const email =this.state.email;
-    const password = this.state.password;
-    firebase.auth().createUserAndRetrieveDataWithEmailAndPassword(email,password)
-    .then(res =>{
-      this.setState({isSigningUp:false})
-      this.onPushDatatoFirebase(res.user._user)
-      this.props.navigation.navigate('Photo')
+  onPushDatatoFirebase = (user) => {
+    firebase.database().ref('/users').child(user.uid).set({
+      displayName: '',
+      phoneNumber: '',
+      address: ''
     })
-    .catch(err=>this.setState({error:err.toString(),password:'',isSigningUp:false}))
+  }
+  onSignIn = () => {
+    this.setState({ isSigningIn: true })
+    const email = this.state.email;
+    const password = this.state.password;
+    firebase.auth().signInAndRetrieveDataWithEmailAndPassword(email, password)
+      .then(res => {
+        this.setState({ isSigningIn: false })
+        this.props.navigation.navigate('Photo')
+      })
+      .catch(err => this.setState({ error: err.toString(), password: '', isSigningIn: false }))
+  }
+
+  onSignUp = () => {
+    this.setState({ isSigningUp: true })
+    const email = this.state.email;
+    const password = this.state.password;
+    firebase.auth().createUserAndRetrieveDataWithEmailAndPassword(email, password)
+      .then(res => {
+        this.setState({ isSigningUp: false })
+        this.onPushDatatoFirebase(res.user._user)
+        this.props.navigation.navigate('Photo')
+      })
+      .catch(err => this.setState({ error: err.toString(), password: '', isSigningUp: false }))
   }
   render() {
     return (
@@ -65,12 +68,11 @@ onSignIn=()=>{
         <TextInput secureTextEntry={true} style={styles.inputField} onChangeText={(password) => this.setState({ password })} value={this.state.password} underlineColorAndroid='rgba(0,0,0,0)' />
         <Text style={styles.textError}>{this.state.error}</Text>
         <View style={[styles.row, { justifyContent: 'center' }]}>
-          <TouchableOpacity style={[styles.button, { backgroundColor: primaryColorGreen }]} onPress={this.onSignIn}>
+          <TouchableOpacity style={[styles.button, { backgroundColor: primaryColorGreen }]} onPress={this.onSignIn} disabled={this.state.email === "" || this.state.password === ""}>
             <Text style={{ color: 'white' }}>Sign In</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, { backgroundColor: primaryColorRed }]} onPress={this.onSignUp}>
-          {this.state.isSigningUp===true ? <ActivityIndicator size='small' color='white'/>: <Text style={{ color: 'white' }}>Sign Up</Text>  }
-           
+          <TouchableOpacity style={[styles.button, { backgroundColor: primaryColorRed }]} onPress={this.onSignUp} disabled={this.state.email === "" || this.state.password === ""}>
+            {this.state.isSigningUp === true ? <ActivityIndicator size='small' color='white' /> : <Text style={{ color: 'white' }}>Sign Up</Text>}
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>

@@ -13,11 +13,8 @@ class HistoryItem extends Component {
                 <Text style={{ fontSize: 20, color: 'white' }}>{this.props.history.time}</Text>
                 <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <Image source={{ uri: `${this.props.history.url}`, width: 200, height: 200 }}></Image>
-                    <View style={{ height: 100, width: 300, backgroundColor: 'red', color: 'white', borderRadius: 10, margin: 10 }}>
-                        <Text style={{ fontSize: 20, color: 'white' }}>{this.props.history.messageLine}</Text>
-                    </View>
+                    <Text style={{ fontSize: 20, color: 'white', backgroundColor: 'red', padding: 5, flex: 1, borderRadius: 10 }}>{this.props.history.messageLine}</Text>
                 </View>
-               
             </View>
         );
     }
