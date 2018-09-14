@@ -15,9 +15,9 @@ import TabMessage from '../components/TabMessage';
 import Icon from 'react-native-vector-icons/Entypo';
 
 import { PersistGate } from 'redux-persist/integration/react';
-import {Provider} from 'react-redux';
+import { Provider } from 'react-redux';
 import configureStore from '../configureStore';
-const {store,persistor} =configureStore()
+const { store, persistor } = configureStore()
 
 
 const BottomNavigation = createBottomTabNavigator(
@@ -26,39 +26,34 @@ const BottomNavigation = createBottomTabNavigator(
     //History: TabHistory,
     Message: TabMessage
   },
-  // {
-  //   navigationOptions: ({ navigation }) => ({
-  //     tabBarIcon: ({ focused, tintColor }) => {
-  //       const { routeName } = navigation.state;
-  //       let iconName;
-  //       if (routeName === 'Photo') {
-  //         iconName = `photo`;
-  //       } else if (routeName === 'History') {
-  //         iconName = `history`;
-  //       } else if (routeName === 'Info') {
-  //         iconName = `info-circle`;
-  //       }
-  //       // You can return any component that you like here! We usually use an
-  //       // icon component from react-native-vector-icons
-  //       return <Icon name={iconName} size={25} color={tintColor} />;
-  //     },
-  //   }),
-  //   tabBarOptions: {
-  //     activeTintColor: primaryColorGreen,
-  //     inactiveTintColor: 'gray',
-  //     style: {
-  //       backgroundColor: 'white'
-  //     }
-  //   },
-  // }
+  {
+    navigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ focused, tintColor }) => {
+        const { routeName } = navigation.state;
+        let iconName;
+        if (routeName === 'Photo') {
+          iconName = `image`;
+        } else if (routeName === 'Message') {
+          iconName = `message`;
+        }
+        // You can return any component that you like here! We usually use an
+        // icon component from react-native-vector-icons
+        return <Icon name={iconName} size={25} color={tintColor} />;
+      },
+    }),
+    tabBarOptions: {
+      activeTintColor: primaryColorGreen,
+      inactiveTintColor: 'gray',
+      style: {
+        backgroundColor: 'white'
+      }
+    },
+  }
 )
 const SwitchNavigation = createSwitchNavigator({
   SplashScreen: SplashScreen,
   LoginScreen: LoginScreen,
   HomeScreen: BottomNavigation,
-
-
-
 })
 console.disableYellowBox = true;
 class App extends Component {
@@ -68,9 +63,9 @@ class App extends Component {
     return (
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-        <SwitchNavigation />
+          <SwitchNavigation />
         </PersistGate>
-       </Provider>
+      </Provider>
     );
   }
 }
