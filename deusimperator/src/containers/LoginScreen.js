@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
   Text, TouchableOpacity,
   View, StyleSheet, Image, Dimensions, TextInput, Platform,
-  KeyboardAvoidingView, ActivityIndicator,
+  KeyboardAvoidingView, ActivityIndicator
 } from 'react-native';
 import firebase from 'react-native-firebase';
 import { backgroundColor, primaryColorBrown, primaryColorRed, primaryColorGreen } from '../styles';
@@ -48,43 +48,50 @@ class LoginScreen extends Component {
   }
   render() {
     return (
+
       <KeyboardAvoidingView style={styles.container}
         behavior={Platform.OS === 'ios' ? 'padding' : null}
         enabled>
-        <Image source={require('../Images/Wallpaper.jpg')}
+        <Image source={require('../Images/EternalRecurrence.jpg')}
           style={{ width: '100%', height: Dimensions.get('screen').width - 60 }}
           resizeMode='contain'
         />
-        <View style={styles.row}>
-          <Image style={styles.icon} source={require('../assets/ic_email.png')} />
-          <Text style={styles.title}>Email</Text>
-        </View>
-        <TextInput style={styles.inputField} onChangeText={(email) => this.setState({ email })} value={this.state.email} underlineColorAndroid='rgba(0,0,0,0)' />
 
-        <View style={styles.row}>
-          <Image style={styles.icon} source={require('../assets/ic_password.png')} />
-          <Text style={styles.title}>Password</Text>
-        </View>
-        <TextInput secureTextEntry={true} style={styles.inputField} onChangeText={(password) => this.setState({ password })} value={this.state.password} underlineColorAndroid='rgba(0,0,0,0)' />
-        <Text style={styles.textError}>{this.state.error}</Text>
-        <View style={[styles.row, { justifyContent: 'center' }]}>
-          <TouchableOpacity style={[styles.button, { backgroundColor: primaryColorGreen }]} onPress={this.onSignIn} disabled={this.state.email === "" || this.state.password === ""}>
-            <Text style={{ color: 'white' }}>Sign In</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, { backgroundColor: primaryColorRed }]} onPress={this.onSignUp} disabled={this.state.email === "" || this.state.password === ""}>
-            {this.state.isSigningUp === true ? <ActivityIndicator size='small' color='white' /> : <Text style={{ color: 'white' }}>Sign Up</Text>}
-          </TouchableOpacity>
+        <View style={{backgroundColor:backgroundColor, justifyContent:'center', opacity:1,borderRadius:20, padding:20}}>
+          <View style={styles.row}>
+            <Image style={styles.icon} source={require('../assets/ic_email.png')} />
+            <Text style={styles.title}>Email</Text>
+          </View>
+          <TextInput style={styles.inputField} onChangeText={(email) => this.setState({ email })} value={this.state.email} underlineColorAndroid='rgba(0,0,0,0)' />
+
+          <View style={styles.row}>
+            <Image style={styles.icon} source={require('../assets/ic_password.png')} />
+            <Text style={styles.title}>Password</Text>
+          </View>
+          <TextInput secureTextEntry={true} style={styles.inputField} onChangeText={(password) => this.setState({ password })} value={this.state.password} underlineColorAndroid='rgba(0,0,0,0)' />
+          <Text style={styles.textError}>{this.state.error}</Text>
+          <View style={[styles.row, { justifyContent: 'center' }]}>
+            <TouchableOpacity style={[styles.button, { backgroundColor: primaryColorGreen }]} onPress={this.onSignIn} disabled={this.state.email === "" || this.state.password === ""}>
+              <Text style={{ color: 'white' }}>Sign In</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.button, { backgroundColor: primaryColorRed }]} onPress={this.onSignUp} disabled={this.state.email === "" || this.state.password === ""}>
+              {this.state.isSigningUp === true ? <ActivityIndicator size='small' color='white' /> : <Text style={{ color: 'white' }}>Sign Up</Text>}
+            </TouchableOpacity>
+          </View>
         </View>
       </KeyboardAvoidingView>
+
+
     );
   }
 }
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: backgroundColor,
+    backgroundColor: 'black',
     flex: 1,
     justifyContent: 'center',
     padding: 30,
+
   },
   row: {
     flexDirection: 'row',

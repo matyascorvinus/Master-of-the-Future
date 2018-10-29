@@ -3,14 +3,13 @@ package com.deusimperator;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.RNFetchBlob.RNFetchBlobPackage;
 import com.imagepicker.ImagePickerPackage;
 import io.invertase.firebase.RNFirebasePackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-
+import com.github.yamill.orientation.OrientationPackage;  // <--- import
 import java.util.Arrays;
 import java.util.List;
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
@@ -29,12 +28,12 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new RNFetchBlobPackage(),
             new ImagePickerPackage(),
             new RNFirebasePackage(),
             new RNFirebaseDatabasePackage(),
             new RNFirebaseAuthPackage(),
-            new RNFirebaseStoragePackage()  // <-- Add this line
+            new RNFirebaseStoragePackage(),  // <-- Add this line
+            new OrientationPackage()    //  <------- Add this
       );
     }
 
